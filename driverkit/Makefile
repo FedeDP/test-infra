@@ -37,7 +37,7 @@ validate_new: $(patsubst config_%,validate/%,$(subst /,_,$(wildcard config/${TAR
 
 all: $(patsubst config_%,%,$(subst /,_,$(CONFIGS)))
 
-specific_target: specific_target_new
+specific_target: specific_target_old specific_target_new
 # old fmt had x86_64 only in root folder. Note: this breaks filtering for TARGET_ARCH
 # because specific_target_old will always build any old config.
 # Not a big deal because we were not going to filter for TARGET_ARCH in any case.
