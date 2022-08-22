@@ -13,6 +13,7 @@ presubmits:
       - command:
         - /workspace/build-drivers.sh
         - ubuntu-generic
+        - "x86_64"
         - "3.*"
         env:
         - name: AWS_REGION
@@ -40,6 +41,7 @@ presubmits:
       - command:
         - /workspace/build-drivers.sh
         - ubuntu-generic
+        - "x86_64"
         - "4.*"
         env:
         - name: AWS_REGION
@@ -67,6 +69,7 @@ presubmits:
       - command:
         - /workspace/build-drivers.sh
         - ubuntu-generic
+        - "x86_64"
         - "5.*"
         env:
         - name: AWS_REGION
@@ -81,6 +84,105 @@ presubmits:
             memory: 6Gi
       nodeSelector:
         Archtype: "x86"
+  - name: build-new-drivers-ubuntu-generic-3-presubmit-arm64
+    decorate: true
+    skip_report: false
+    agent: kubernetes
+    branches:
+      - ^master$
+    run_if_changed: '^driverkit/config/[a-z0-9.+-]{5,}/(.+/)?ubuntu-generic_3*'
+    spec:
+      serviceAccountName: driver-kit
+      containers:
+      - command:
+        - /workspace/build-drivers.sh
+        - ubuntu-generic
+        - "aarch64"
+        - "3.*"
+        env:
+        - name: AWS_REGION
+          value: eu-west-1
+        image: 292999226676.dkr.ecr.eu-west-1.amazonaws.com/test-infra/build-drivers:latest
+        imagePullPolicy: Always
+        securityContext:
+          privileged: true
+        resources:
+          requests:
+            cpu: 1500m #m5large is 2vpcu and 8gb ram so this 75% of a node
+            memory: 6Gi
+      nodeSelector:
+        Archtype: "arm"
+      tolerations:
+      - key: "Archtype"
+        operator: "Equal"
+        value: "arm"
+        effect: "NoSchedule"
+  - name: build-new-drivers-ubuntu-generic-4-presubmit-arm64
+    decorate: true
+    skip_report: false
+    agent: kubernetes
+    branches:
+      - ^master$
+    run_if_changed: '^driverkit/config/[a-z0-9.+-]{5,}/(.+/)?ubuntu-generic_4*'
+    spec:
+      serviceAccountName: driver-kit
+      containers:
+      - command:
+        - /workspace/build-drivers.sh
+        - ubuntu-generic
+        - "aarch64"
+        - "4.*"
+        env:
+        - name: AWS_REGION
+          value: eu-west-1
+        image: 292999226676.dkr.ecr.eu-west-1.amazonaws.com/test-infra/build-drivers:latest
+        imagePullPolicy: Always
+        securityContext:
+          privileged: true
+        resources:
+          requests:
+            cpu: 1500m #m5large is 2vpcu and 8gb ram so this 75% of a node
+            memory: 6Gi
+      nodeSelector:
+        Archtype: "arm"
+      tolerations:
+      - key: "Archtype"
+        operator: "Equal"
+        value: "arm"
+        effect: "NoSchedule"
+  - name: build-new-drivers-ubuntu-generic-5-presubmit-arm64
+    decorate: true
+    skip_report: false
+    agent: kubernetes
+    branches:
+      - ^master$
+    run_if_changed: '^driverkit/config/[a-z0-9.+-]{5,}/(.+/)?ubuntu-generic_5*'
+    spec:
+      serviceAccountName: driver-kit
+      containers:
+      - command:
+        - /workspace/build-drivers.sh
+        - ubuntu-generic
+        - "aarch64"
+        - "5.*"
+        env:
+        - name: AWS_REGION
+          value: eu-west-1
+        image: 292999226676.dkr.ecr.eu-west-1.amazonaws.com/test-infra/build-drivers:latest
+        imagePullPolicy: Always
+        securityContext:
+          privileged: true
+        resources:
+          requests:
+            cpu: 1500m #m5large is 2vpcu and 8gb ram so this 75% of a node
+            memory: 6Gi
+      nodeSelector:
+        Archtype: "arm"
+      tolerations:
+      - key: "Archtype"
+        operator: "Equal"
+        value: "arm"
+        effect: "NoSchedule"    
 postsubmits:
   falcosecurity/test-infra:
   - name: build-new-drivers-ubuntu-generic-3-postsubmit
@@ -96,6 +198,7 @@ postsubmits:
       - command:
         - /workspace/build-drivers.sh
         - ubuntu-generic
+        - "x86_64"
         - "3.*"
         env:
         - name: AWS_REGION
@@ -125,6 +228,7 @@ postsubmits:
       - command:
         - /workspace/build-drivers.sh
         - ubuntu-generic
+        - "x86_64"
         - "4.*"
         env:
         - name: AWS_REGION
@@ -154,6 +258,7 @@ postsubmits:
       - command:
         - /workspace/build-drivers.sh
         - ubuntu-generic
+        - "x86_64"
         - "5.*"
         env:
         - name: AWS_REGION
@@ -170,3 +275,108 @@ postsubmits:
             memory: 6Gi
       nodeSelector:
         Archtype: "x86"
+  - name: build-new-drivers-ubuntu-generic-3-postsubmit-arm64
+    decorate: true
+    skip_report: false
+    agent: kubernetes
+    branches:
+      - ^master$
+    run_if_changed: '^driverkit/config/[a-z0-9.+-]{5,}/(.+/)?ubuntu-generic_3*'
+    spec:
+      serviceAccountName: driver-kit
+      containers:
+      - command:
+        - /workspace/build-drivers.sh
+        - ubuntu-generic
+        - "aarch64"
+        - "3.*"
+        env:
+        - name: AWS_REGION
+          value: eu-west-1
+        - name: PUBLISH_S3
+          value: "true"
+        image: 292999226676.dkr.ecr.eu-west-1.amazonaws.com/test-infra/build-drivers:latest
+        imagePullPolicy: Always
+        securityContext:
+          privileged: true
+        resources:
+          requests:
+            cpu: 1500m #m5large is 2vpcu and 8gb ram so this 75% of a node
+            memory: 6Gi
+      nodeSelector:
+        Archtype: "arm"
+      tolerations:
+      - key: "Archtype"
+        operator: "Equal"
+        value: "arm"
+        effect: "NoSchedule"
+  - name: build-new-drivers-ubuntu-generic-4-postsubmit-arm64
+    decorate: true
+    skip_report: false
+    agent: kubernetes
+    branches:
+      - ^master$
+    run_if_changed: '^driverkit/config/[a-z0-9.+-]{5,}/(.+/)?ubuntu-generic_4*'
+    spec:
+      serviceAccountName: driver-kit
+      containers:
+      - command:
+        - /workspace/build-drivers.sh
+        - ubuntu-generic
+        - "aarch64"
+        - "4.*"
+        env:
+        - name: AWS_REGION
+          value: eu-west-1
+        - name: PUBLISH_S3
+          value: "true"
+        image: 292999226676.dkr.ecr.eu-west-1.amazonaws.com/test-infra/build-drivers:latest
+        imagePullPolicy: Always
+        securityContext:
+          privileged: true
+        resources:
+          requests:
+            cpu: 1500m #m5large is 2vpcu and 8gb ram so this 75% of a node
+            memory: 6Gi
+      nodeSelector:
+        Archtype: "arm"
+      tolerations:
+      - key: "Archtype"
+        operator: "Equal"
+        value: "arm"
+        effect: "NoSchedule"
+  - name: build-new-drivers-ubuntu-generic-5-postsubmit-arm64
+    decorate: true
+    skip_report: false
+    agent: kubernetes
+    branches:
+      - ^master$
+    run_if_changed: '^driverkit/config/[a-z0-9.+-]{5,}/(.+/)?ubuntu-generic_5*'
+    spec:
+      serviceAccountName: driver-kit
+      containers:
+      - command:
+        - /workspace/build-drivers.sh
+        - ubuntu-generic
+        - "aarch64"
+        - "5.*"
+        env:
+        - name: AWS_REGION
+          value: eu-west-1
+        - name: PUBLISH_S3
+          value: "true"
+        image: 292999226676.dkr.ecr.eu-west-1.amazonaws.com/test-infra/build-drivers:latest
+        imagePullPolicy: Always
+        securityContext:
+          privileged: true
+        resources:
+          requests:
+            cpu: 1500m #m5large is 2vpcu and 8gb ram so this 75% of a node
+            memory: 6Gi
+      nodeSelector:
+        Archtype: "arm"
+      tolerations:
+      - key: "Archtype"
+        operator: "Equal"
+        value: "arm"
+        effect: "NoSchedule"     
